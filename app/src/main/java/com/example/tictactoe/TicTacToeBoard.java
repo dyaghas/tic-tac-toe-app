@@ -68,6 +68,11 @@ public class TicTacToeBoard extends View {
         drawGameBoard(canvas);
 
         drawMarkers(canvas);
+
+        if(winningLine) {
+            paint.setColor(winning_line_color);
+            drawWinningLine(canvas);
+        }
     }
 
     //function called on screen touch
@@ -181,6 +186,48 @@ public class TicTacToeBoard extends View {
                 (row*cellSize + cellSize) - cellSize*0.2f,
                 paint
         );
+    }
+
+    private void drawHorizontalLine(Canvas canvas, int row, int col) {
+        paint.setStrokeWidth(9);
+        canvas.drawLine(col, row*cellSize+(float)cellSize/2,
+                cellSize*3, row*cellSize+(float)cellSize/2, paint);
+    }
+
+    private void drawVerticalLine(Canvas canvas, int row, int col) {
+        paint.setStrokeWidth(9);
+        canvas.drawLine(col*cellSize+(float)cellSize/2, row,
+                col*cellSize+(float)cellSize/2, cellSize*3, paint);
+    }
+
+    private void drawDiagonalLinePositive(Canvas canvas) {
+        paint.setStrokeWidth(9);
+        canvas.drawLine(0, cellSize*3, cellSize*3, 0, paint);
+    }
+
+    private void drawDiagonalLineNegative(Canvas canvas) {
+        paint.setStrokeWidth(9);
+        canvas.drawLine(0, 0, cellSize*3, cellSize*3, paint);
+    }
+
+    private void drawWinningLine(Canvas canvas) {
+        int row = game.getWinType()[0];
+        int col = game.getWinType()[1];
+
+        switch(game.getWinType()[2]) {
+            case 1:
+                drawHorizontalLine(canvas, row, col);
+                break;
+            case 2:
+                drawVerticalLine(canvas, row, col);
+                break;
+            case 3:
+                drawDiagonalLineNegative(canvas);
+                break;
+            case 4:
+                drawDiagonalLinePositive(canvas);
+                break;
+        }
     }
 
     public void setUpGame(Button playAgain, Button home, TextView playerDisplay, String[] names) {

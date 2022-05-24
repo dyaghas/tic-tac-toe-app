@@ -12,7 +12,7 @@
         android:id="@+id/player_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text=""
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/ticTacToeBoard"
@@ -63,5 +63,6 @@
         app:layout_constraintTop_toTopOf="parent"
         custom:board_color="@color/black"
         custom:x_color="@color/black"
-        custom:o_color="@color/black"/>
+        custom:o_color="@color/black"
+        custom:winning_line_color="@color/darkBlue"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,9 @@ public class GameLogic {
 
     private String[] playerNames = {"player1", "player2"};
 
+    //1º element = row | 2º element = col | 3º element = line type
+    private int[] winType = {-1, -1, -1};
+
     private Button playAgainBtn;
     private Button homeBtn;
     private TextView playerTurn;
@@ -43,31 +46,35 @@ public class GameLogic {
     public boolean winnerCheck() {
         boolean isWinner = false;
 
-        //check rows
+        //check rows | winType == 1
         for(int row=0; row<3; row++) {
             if(gameBoard[row][0] == gameBoard[row][1] && gameBoard[row][1] == gameBoard[row][2] &&
             gameBoard[row][0] != 0) {
+                winType = new int[] {row, 0, 1};
                 isWinner = true;
             }
         }
 
-        //check cols
+        //check cols | winType == 2
         for(int col=0; col<3; col++) {
             if(gameBoard[0][col] == gameBoard[1][col] && gameBoard[1][col] == gameBoard[2][col] &&
             gameBoard[0][col] != 0) {
+                winType = new int[] {0, col, 2};
                 isWinner = true;
             }
         }
 
-        //check diagonals
+        //check negative diagonal | winType == 3
         if(gameBoard[0][0] == gameBoard[1][1] && gameBoard[1][1] == gameBoard[2][2] &&
         gameBoard[0][0] != 0) {
+            winType = new int[] {0, 2, 3};
             isWinner = true;
         }
 
-        //check diagonals
+        //check positive diagonal | winType == 4
         if(gameBoard[0][2] == gameBoard[1][1] && gameBoard[1][1] == gameBoard[2][0] &&
                 gameBoard[0][2] != 0) {
+            winType = new int[] {2, 2, 4};
             isWinner = true;
         }
 
@@ -123,5 +130,9 @@ public class GameLogic {
 
     public void setPlayerNames(String[] playerNames) {
         this.playerNames = playerNames;
+    }
+
+    public int[] getWinType() {
+        return winType;
     }
 }
