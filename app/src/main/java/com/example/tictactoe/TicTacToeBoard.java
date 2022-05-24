@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -17,6 +19,8 @@ public class TicTacToeBoard extends View {
     private final int x_color;
     private final int o_color;
     private final int winning_line_color;
+
+    private boolean winningLine = false;
 
     private final Paint paint = new Paint();
 
@@ -81,16 +85,24 @@ public class TicTacToeBoard extends View {
             int row = (int) Math.ceil(y/cellSize);
             int col = (int) Math.ceil(x/cellSize);
 
-            if(game.updateGameBoard(row, col)) {
-                invalidate();
+            if(!winningLine) {
+                if(game.updateGameBoard(row, col)) {
+                    invalidate();
 
-                //alter the player turn
-                if(game.getPlayer() % 2 == 0) {
-                    game.setPlayer(game.getPlayer() - 1);
-                } else {
-                    game.setPlayer(game.getPlayer() + 1);
+                    if(game.winnerCheck()){
+                        winningLine = true;
+                        invalidate();
+                    }
+
+                    //alter the player turn
+                    if(game.getPlayer() % 2 == 0) {
+                        game.setPlayer(game.getPlayer() - 1);
+                    } else {
+                        game.setPlayer(game.getPlayer() + 1);
+                    }
                 }
             }
+
 
             return true;
         }
@@ -169,6 +181,13 @@ public class TicTacToeBoard extends View {
                 (row*cellSize + cellSize) - cellSize*0.2f,
                 paint
         );
+    }
+
+    public void setUpGame(Button playAgain, Button home, TextView playerDisplay, String[] names) {
+        game.setPlayAgainBtn(playAgain);
+        game.setHomeBtn(home);
+        game.setPlayerTurn(playerDisplay);
+        game.setPlayerNames(names);
     }
 
 }
