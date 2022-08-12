@@ -1,4 +1,4 @@
-# TicTacToeApp
+# TicTacToeApp | Jogo da velha
 
 ## Table of contents | Tabela de conteúdo
 
